@@ -34,21 +34,20 @@ import { increment,decrement } from "../redux/actions/count";
 		3.mapStateToProps方法所返回的那个对象的value就作为传给UI组件props的value
 */
 
+// react-redux底层在调用mapStateToProps方法时会传redux中的状态
+	function mapStateToProps(state){
+		return {count:state}
+	}
 
 	// react-redux底层在调用mapDispatchToProps方法时会传redux中的dispatch方法
 	// 返回一个属性值是方法的对象,在UI子组件中通过调用这些方法再去间接修改redux的状态
+	function mapDispatchToProps(dispatch){
+		return {
+			increment:value => dispatch(increment(value)),
+			decrement:value => dispatch(decrement(value)),
+		}
+	}
 
-	// export default connect(
-	// 				state=>({count:state}),
-	// 				dispatch=>({
-	// 					increment:value => dispatch(increment(value)),
-	// 					decrement:value => dispatch(decrement(value)),
-	// 				}))(Count);
-
-	// connect()(),第一个小括号里面写把从redux中获取的state和dispatch映射成UI组件的props的方法
-	// mapDispatchToProps你写成了对象形式,react-redux底层会给你改写成函数的形式
-	export default connect(
-		state=>({count:state}),
-		{increment,decrement,})(Count);
+  export default connect(mapStateToProps,mapDispatchToProps)(Count);
 
 
