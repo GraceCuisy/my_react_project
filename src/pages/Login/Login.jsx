@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { reqLogin } from "../../api";
 import { Form, Input, Button} from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
@@ -8,8 +9,10 @@ import "./css/Login.less";
 const {Item}=Form;
 
 export default class Login extends Component {
-  onFinish = values => {
-    console.log('Received values of form: ', values);
+  // 表单提交的回调 values是帮你收集的表单输入项的对象
+  onFinish = async (values) => {
+   const result=await reqLogin(values)
+   console.log('成功了',result);
   };
   /*用户名/密码的的合法性要求
     1). 必须输入
