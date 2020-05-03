@@ -38,3 +38,18 @@
 ### 响应状态码
     404: 请求资源未定位
     401: 请求资源已经找到,但是没有权限查看,被回绝了
+### react脚手架配置代理
+### 关于ES6模块化和commonJS在项目中的使用
+    你写组件的时候用前端人员喜欢用的ES6的模块化
+    但是写各种配置的时候是在改webpack的配置,webpack是基于Node的,
+    Node中用的是CJS(commonJS),所以写配置时用commonJS
+### 配置路径别名
+    用一个字符串代替一个文件的根路径
+### config-overrides.js文件
+    项目都是用webpack搭建的,webpack最重要的就是配置(config),
+    webpack的配置很重要,项目中没有直接暴露出来,怕我们一碰就碰坏了
+    我们可以用config-overrides.js文件把我们要配置的东西带过去,内部去修改,如果我们改错了,
+    可以直接把这个文件一删,但是webpack的配置还是可用的.
+### path是Nodejs中的一个内置库,Nodejs中内置了很多库, 项目是webpack搭建的,webpack基于nodejs
+    所以我们在项目中可以直接引入path这个库进行使用
+### __dirname是nodejs中的一个内置变量,能拿到当前文件所在文件夹的根路径

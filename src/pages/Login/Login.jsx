@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { reqLogin } from "../../api";
+import { reqLogin } from "@/api";
 import { Form, Input, Button} from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
