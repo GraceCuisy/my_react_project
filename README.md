@@ -5,16 +5,24 @@
     是Action的创造器,Action Creators(简写actions)这个文件夹是专门用来存放Action的,
     里面存放着一个一个函数.
     每一个action对象通过一个函数生成,外面调用对应的函数生成对应的action对象
+    (action是Object对象)
     文件分别暴露多个函数
-### 
+### 关于redux中角色理解
+    store是站在C位的 管理者 最核心的  "老板在创业之初就找好了和它并肩作战的人"
+    reducer是store的手下 是卖命干活的 
+    reducer负责状态的init和update
+    reducer中一般不用if判断,一般用switch case 
+### 输入类型的标签 input textarea等输入的内容都是字符串格式
 
 
 
 ## react-redux
+### 容器组件相当于父组件(秘书),是直接和redux打交道的人
 ### 在react-redux中 Provider组件被称为顶级组件
-    使用<Provider>组件标签时,要给它里面传入store对象,
+    1.使用<Provider>组件标签时,要给它里面传入store对象,
     从而让所有组件中能用state和dispatch, 如果不传,在Count容器组件中
     mapStateToProps通过形参就接不到state了
+    2.provider的另一个功能 你数据一变,重新render
 ### Reducers
     Reducers里面不要写业务逻辑,reducer里面可以写加,减,乘除等实实在在的动作.
     添加一个人,删除用户信息,保存用户信息
