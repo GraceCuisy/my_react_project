@@ -3,61 +3,13 @@
   容器组件会通过props传递给它的UI子组件状态,和操作状态的方法;
 */
 
-//引入react核心库
-import React, { Component } from 'react'
-// 引入核心的connect方法
+// 1.引入UI组件
+import Count from "../components/Count";
+// 2.引入核心的connect方法
 import { connect } from "react-redux";
-// 引入多个action,供mapDispatchToProps方法去操作redux状态时使用
+// 3.引入多个action,供mapDispatchToProps方法去操作redux状态时使用
 import { increment,decrement,incrementAsync } from "../redux/actions/count";
 
-// Count的UI组件
-class Count extends Component {
-
-  increment=()=>{
-    // 获取select中值
-    const {value}=this.refs.selectNode;
-    this.props.increment(value*1);
-  }
-  decrement=()=>{
-    // 获取select中值
-    const {value}=this.refs.selectNode;
-    this.props.decrement(value*1);
-  }
-  incrementOdd=()=>{
-    const {value}=this.refs.selectNode;
-    const {count}=this.props
-    if(Math.abs(count % 2)===1){
-      this.props.increment(value*1);
-    }
-  }
-  incrementAsync=()=>{
-    // 获取select中值
-    const {value}=this.refs.selectNode;
-    // setTimeout(() => {
-    //   this.props.increment(value*1);
-    // }, 500);
-    this.props.incrementAsync(value*1,1000)
-  }
-
-  render() {
-    const {count,personNum}=this.props;
-    return (
-      <div>
-        <div>点击了 {count} 次--下方人数为{personNum}</div>
-        <br/>
-        <select ref="selectNode">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-        </select>
-        <button onClick={this.increment}>+</button>&nbsp;
-        <button onClick={this.decrement}>-</button>&nbsp;
-        <button onClick={this.incrementOdd}>increment if odd</button>&nbsp;
-        <button onClick={this.incrementAsync}>increment async</button>
-      </div>
-    )
-  }
-}
 /* 
 		connect方法：
 			1.connect()的返回值依然是一个函数。

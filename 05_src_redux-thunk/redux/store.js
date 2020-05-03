@@ -6,8 +6,6 @@
 */
 
 import {createStore,applyMiddleware} from "redux";
+import countReducer from "./reducers/count";
 import thunk from "redux-thunk";
-import {composeWithDevTools} from "redux-devtools-extension";
-import allReducers from "./reducers";
-
-export default createStore(allReducers,composeWithDevTools(applyMiddleware(thunk)));
+export default createStore(countReducer,applyMiddleware(thunk));

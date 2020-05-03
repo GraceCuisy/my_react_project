@@ -45,10 +45,15 @@ import { increment,decrement } from "../redux/actions/count";
 	// 					decrement:value => dispatch(decrement(value)),
 	// 				}))(Count);
 
+		obj={ //在组件对象中调用increment方法,就是间接调用了redux中的dispatch方法
+			increment:function(value){
+				dispatch(increment(value));
+			}
+		}
 	// connect()(),第一个小括号里面写把从redux中获取的state和dispatch映射成UI组件的props的方法
 	// mapDispatchToProps你写成了对象形式,react-redux底层会给你改写成函数的形式
 	export default connect(
 		state=>({count:state}),
-		{increment,decrement,})(Count);
+		{increment,decrement})(Count);
 
 

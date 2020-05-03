@@ -22,15 +22,17 @@ export default class Count extends Component {
   incrementAsync=()=>{
     // 获取select中值
     const {value}=this.refs.selectNode;
-    setTimeout(() => {
-      this.props.increment(value*1);
-    }, 500);
+    // setTimeout(() => {
+    //   this.props.increment(value*1);
+    // }, 500);
+    this.props.incrementAsync(value*1,1000)
   }
 
   render() {
+    const {count,personNum}=this.props;
     return (
       <div>
-        <div>点击了 {this.props.count} 次</div>
+        <div>点击了 {count} 次--下方人数为{personNum}</div>
         <br/>
         <select ref="selectNode">
           <option value="1">1</option>
