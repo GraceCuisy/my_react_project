@@ -6,6 +6,8 @@
     5.统一处理错误 
 */
 import axios from "axios";
+import Nprogress from 'nprogress';
+import "nprogress/nprogress.css";
 import qs from "querystring";
 import { message as msg } from 'antd';
 
@@ -17,6 +19,8 @@ axios.defaults.timeout=2000;
    统一处理post请求json编码问题(转为urlencoded)
 */
 axios.interceptors.request.use((config)=>{
+  // 请求进度条的开始
+  Nprogress.start();
   const {method,data}=config;
   if(method.toLowerCase()==='post' && data instanceof Object){
     config.data=qs.stringify(data);
@@ -27,10 +31,12 @@ axios.interceptors.request.use((config)=>{
 axios.interceptors.response.use(
   // 成功的回调
   response=>{
+    Nprogress.done();
     return response.data;
   },
   // 失败的回调
   error=>{
+    Nprogress.done();
     let errmsg='未知错误,请联系网站管理人员';
     const {message} =error;
     if(message.indexof('401') !==-1) errmsg='未登录或身份过期,请重新登录'
