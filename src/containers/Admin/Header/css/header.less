@@ -1,0 +1,46 @@
+.header-top{
+  height:40px;
+  background-color:#fff;
+  border-bottom: 1px solid #1DA57A;
+  text-align: right;
+}
+.header-bottom{
+  height:40px;
+  background-color: #fff;
+  line-height: 40px;
+  .header-b-l{
+    position: relative;
+    width: 25%;
+    // background-color: orange;
+    float: left;
+    text-align: center;
+    font-size: 20px;
+    &::after{
+      //注意伪元素一定要有content属性
+      position: absolute;
+      left:50%;
+      top: 40px;
+      transform: translateX(-50%);
+      display: block;
+      content: '';
+      width:40px;
+      height: 40px;
+      border-top: 20px solid #fff;
+      border-right: 20px solid transparent;
+      border-bottom: 20px solid transparent;
+      border-left: 20px solid transparent;
+    }
+  }
+  .header-b-r{
+    width: 75%;
+    text-align: right;
+    padding-right: 10px;
+    // background-color: skyblue;
+    float: right;
+    img{
+      width: 20px;
+      height: 20px;
+      margin:0 5px;
+    }
+  }
+}

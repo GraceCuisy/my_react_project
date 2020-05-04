@@ -1,5 +1,5 @@
 // 此文件是专门用于操作用户信息的action
-import { SAVE_USERINFO } from "../action_types";
+import { SAVE_USERINFO,DELETE_USERINFO} from "../action_types";
 
 export const saveUserInfo= userObj => {
   const {user,token}=userObj;
@@ -7,4 +7,9 @@ export const saveUserInfo= userObj => {
   localStorage.setItem('user',JSON.stringify(user));
   localStorage.setItem('token',token);
   return {type:SAVE_USERINFO,data:userObj}
+}
+
+export const deleteUserInfo=()=>{
+  localStorage.clear();
+  return {type:DELETE_USERINFO}
 }

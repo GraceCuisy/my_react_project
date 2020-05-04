@@ -1,5 +1,5 @@
 // 向外暴露一个专门用来操作用户信息的函数
-import { SAVE_USERINFO } from "../action_types";
+import { SAVE_USERINFO,DELETE_USERINFO } from "../action_types";
 
 // 当初始化的时候先尝试从local中去拿数据,如果没有再指定一个初始值
 // 如果用户改坏了local中的user信息,那么用JSON.parse去解析时会报错 try catch
@@ -26,6 +26,9 @@ export default function (preState=initValue,action) {
     case SAVE_USERINFO: //保存用户信息,说明是登录的
       newState={...data,isLogin:true};
       return newState;
+    case DELETE_USERINFO: 
+    newState={};
+    return newState;
     default:
       return preState;
   }
