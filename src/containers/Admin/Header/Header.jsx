@@ -54,7 +54,7 @@ class Header extends Component {
           <Button size='small' onClick={this.fullScreen}>
             {this.state.isFull ? <FullscreenExitOutlined />:<FullscreenOutlined/>}
             </Button>
-          <span> 欢迎，admin</span>
+          <span> 欢迎,{this.props.username}</span>
           <Button type='link' onClick={this.logout}>退出登录</Button>
         </div>
         <div className="header-bottom">
@@ -71,6 +71,8 @@ class Header extends Component {
 }
 
 export default connect(
-  state=>({}), //映射状态
+  state=>({//映射状态
+    username:state.userInfo.user.username,
+  }), 
   {deleteUserInfo} //映射操作状态的方法
 )(Header)
