@@ -8,7 +8,7 @@ let _token;
 try {
   _user=JSON.parse(localStorage.getItem('user'));
 } catch (error) {
-  _user={};
+  _user=null;
 }
 _token=localStorage.getItem('token'); 
 
