@@ -6,8 +6,13 @@
 		2.如果已经登录，但是要看的是login，不允许。
 */
 import React,{Component} from "react";
-import {Redirect} from 'react-router-dom'
+import {Redirect} from 'react-router-dom';
+import {connect} from 'react-redux';
+
 export default function(CurrentComponent){
+  @connect(
+    state=>({isLogin:state.userInfo.isLogin})
+  )
   class TargetComponent extends Component{
     render(){
       const {isLogin}=this.props;

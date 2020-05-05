@@ -11,9 +11,7 @@ import "./css/Login.less";
 const {Item}=Form;
 
 @connect(
-  state=>({
-    isLogin:state.userInfo.isLogin,
-  }), //映射状态
+  state=>({}), //映射状态
   {saveUserInfo} //映射操作状态的方法)
 ) 
 @Check
