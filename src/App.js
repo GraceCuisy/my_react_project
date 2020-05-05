@@ -18,53 +18,66 @@ export default class App extends Component {
 //装饰器语法总结：
 
 //情况一：装饰器函数没有return(必须是程序员写代码的return)
-function demo(target) {
+/* function demo(target) {
 	target.a = 1
 	target.b = 2
 }
 
 //使用装饰器语法，代码如下:
-@demo
-class MyClass {}
-//上方的装饰器语法，会被翻译为如下代码：
+// @demo
 // class MyClass {}
-// demo(MyClass) 
 
+// console.log(MyClass.a)
+// console.log(MyClass.b)
+//上方的装饰器语法，会被翻译为如下代码：
+class MyClass {}
+demo(MyClass) 
+
+console.log(MyClass.a)
+console.log(MyClass.b) */
 /****************************************************************/
 
 //情况二：装饰器函数有返回值
 /* function demo(target) {
 		target.a = 1
 		target.b = 2
-		return 100
-}
+		return {c:3,...target}
+} */
 //使用装饰器语法，代码如下
 // @demo
 // class MyClass {}
 
+// console.log('@@',MyClass);
+// console.log(MyClass.a)
+// console.log(MyClass.b)
+
 //上方的装饰器语法，会被翻译为如下代码:
-//class MyClass {}
-//MyClass = demo(MyClass) */
+// class MyClass {}
+// MyClass = demo(MyClass)
 
 /****************************************************************/
 
 //情况三：装饰器函数是另外一个函数的返回值
-/* function test(){
-	function demo(target) {
-		target.a = 1
-		target.b = 2
-		return target
-	}
-	return demo
-}
+// function test(){
+// 	function demo(target) {
+// 		target.a = 1
+// 		target.b = 2
+// 		return target
+// 	}
+// 	return demo
+// }
 
-//使用装饰器语法，代码如下
-//@test()
-//class MyClass {}
+// 使用装饰器语法，代码如下
+/* @test()
+class MyClass {}
+
+console.log('@@',MyClass);
+console.log(MyClass.a)
+console.log(MyClass.b)
 
 //上方的装饰器语法，会被翻译为如下代码:
-//class MyClass {}
-//MyClass = test()(MyClass) */
+class MyClass {}
+MyClass = test()(MyClass) */
 
 
 /*

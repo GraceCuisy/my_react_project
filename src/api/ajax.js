@@ -39,9 +39,9 @@ axios.interceptors.response.use(
     Nprogress.done();
     let errmsg='未知错误,请联系网站管理人员';
     const {message} =error;
-    if(message.indexof('401') !==-1) errmsg='未登录或身份过期,请重新登录'
-    else if(message.indexof('Network Error')!==-1) errmsg="网络不通"
-    else if(message.indexof('timeout')!==-1) errmsg="网络不稳定,链接超时"
+    if(message.indexOf('401') !==-1) errmsg='未登录或身份过期,请重新登录'
+    else if(message.indexOf('Network Error')!==-1) errmsg="网络不通"
+    else if(message.indexOf('timeout')!==-1) errmsg="网络不稳定,链接超时"
     msg.error(errmsg);
     // 返回一个pending状态的Promise,就会在响应拦截器中统一处理错误,后续就不用处理错误了
     return new Promise(()=>{})

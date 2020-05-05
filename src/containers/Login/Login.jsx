@@ -1,27 +1,35 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import {Redirect} from 'react-router-dom'
 import { saveUserInfo } from "@/redux/actions/login";
 import { reqLogin } from "@/api";
 import { Form, Input, Button,message} from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-
+import Check from '@/containers/Hoc/Check';
 import Logo from "./images/logo.png";
 import "./css/Login.less";
 
 const {Item}=Form;
 
+@connect(
+  state=>({
+    isLogin:state.userInfo.isLogin,
+  }), //映射状态
+  {saveUserInfo} //映射操作状态的方法)
+) 
+@Check
 class Login extends Component {
+  componentDidMount(){
+    console.log(this.props);
+  }
   // 表单提交的回调 values是帮你收集的表单输入项的对象
   onFinish = async (values) => {
    const result=await reqLogin(values)
   // 判断服务器返回的状态码是1还是0
+  const {user,token}=result.data;
   if(result.status===0){
-    const {user,token}=result.data;
-    message.success('登录成功!');
+    message.success('登录成功!',1);
     // 登录成功,跳转admin组件
     this.props.history.replace('/admin');
-    console.log(result);
     // 登录成功之后,保存用户信息到redux和localStorage
     this.props.saveUserInfo({user,token});
   }else{
@@ -44,10 +52,6 @@ class Login extends Component {
       else return Promise.resolve();
     }
   render() {
-    // 如果当前是登录的,就不能让用户看登录,让他去admin
-    if(this.props.isLogin){
-      return <Redirect to="/admin"/>
-    }
     return (
       <div className='login'>
         <header>
@@ -94,10 +98,9 @@ class Login extends Component {
     )
   }
 }
+//在UI组件渲染之前去检查能不能进行渲染, @connect包起来是为了和redux打交道
+// Login1=Check(Login);
+// connect()(Login1)
+// connect包裹着的已经不是开始定义的Login了,而是Check函数的返回值了,
 
-export default connect(
-  state=>({
-    isLogin:state.userInfo.isLogin,
-  }), //映射状态
-  {saveUserInfo} //映射操作状态的方法
-)(Login);
+export default Login;

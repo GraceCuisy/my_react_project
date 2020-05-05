@@ -13,6 +13,12 @@ import demo from './demo.jpg';
 
 const { confirm } = Modal;
 
+@connect(
+  state=>({//映射状态
+    username:state.userInfo.user.username,
+  }), 
+  {deleteUserInfo} //映射操作状态的方法
+)
 class Header extends Component {
   state={
     isFull:false, //要定义一个状态控制图标的切换,让按钮的全屏切换改变状态值
@@ -69,10 +75,4 @@ class Header extends Component {
     )
   }
 }
-
-export default connect(
-  state=>({//映射状态
-    username:state.userInfo.user.username,
-  }), 
-  {deleteUserInfo} //映射操作状态的方法
-)(Header)
+export default Header;
