@@ -5,7 +5,7 @@ import { reqLogin } from "@/api";
 import { Form, Input, Button,message} from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import Check from '@/containers/Hoc/Check';
-import Logo from "./images/logo.png";
+import Logo from "@/assets/images/logo.png";
 import "./css/Login.less";
 
 const {Item}=Form;

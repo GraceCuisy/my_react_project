@@ -3,6 +3,7 @@
 import ajax from './ajax'; 
 import jsonp from 'jsonp'
 import {message} from 'antd'
+import {CITY,WEATHER_AK} from '@/config'
 
 // 请求登录函数 loginObj 就是传过来的values,格式 {username:xxx,password:xxx}
 export const reqLogin =(loginObj)=> ajax.post('/login',loginObj);
@@ -11,7 +12,7 @@ export const reqLogin =(loginObj)=> ajax.post('/login',loginObj);
    但是promise和await的组合就可以了 请求函数中返回promise,promise中去发送异步请求, 组件中用await去等待,然后拿到服务器返回的成功的数据
 */
 export const reqWeatherData=()=>{
-  const URL='http://api.map.baidu.com/telematics/v3/weather?location=北京&output=json&ak=3p49MVra6urFRGOT9s8UBWr2'
+  const URL=`http://api.map.baidu.com/telematics/v3/weather?location=${CITY}&output=json&ak=${WEATHER_AK}`
   return new Promise((resolve,reject)=>{
     jsonp(URL,{
       timeout:2000,
@@ -26,3 +27,6 @@ export const reqWeatherData=()=>{
     })
   })
 }
+
+// 获取商品分类数据
+export const reqCategoryList =()=> ajax.get('/manage/category/list');
