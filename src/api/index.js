@@ -41,5 +41,7 @@ export const reqSearch=(searchType,keyword,pageNum,pageSize)=> ajax.get('/manage
   pageNum,
   pageSize
 }})
-
-
+// 请求添加一个分类
+export const reqAddCategory =(categoryName)=> ajax.post('/manage/category/add',{categoryName});
+//请求更改分类名
+export const reqUpdateCategory = (categoryId,categoryName) => ajax.post('/manage/category/update',{categoryId,categoryName})

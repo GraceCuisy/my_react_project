@@ -124,4 +124,8 @@
     然后清除redux和local中的用户和其他数据
 ### 关于ref的使用
     1.如果给普通的html标签打ref='name',通过this.refs.name 能拿到当前标签
-    2.如果给
+    2.如果给一个组件标签打ref='categoryForm',通过this.refs.categoryForm是拿到当前组件的实例
+### antd中关于弹窗 showModal
+    antd的逻辑是: 什么时候showModal调完之后,antd才去做弹框的渲染, 
+    在弹框还没有修改时,函数内部通过this.refs.categoryForm 并不能拿到当前表单实例
+    拿到是undefined

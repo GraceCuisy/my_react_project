@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { Card,Button,Table,Modal,Form, Input,} from 'antd';
+import { Card,Button,Table,Modal,Form, Input,message} from 'antd';
 import {PlusCircleOutlined} from '@ant-design/icons';
-// import { reqCategoryList } from "@/api";
 import { connect } from "react-redux";
 import { saveCategory,saveCategoryAsync } from "@/redux/actions/category";
+import { PAGE_SIZE } from "@/config";
+import { reqAddCategory,reqUpdateCategory } from "@/api";
 
 const {Item}=Form;
 
@@ -15,36 +16,65 @@ class Category extends Component {
 
   state = { visible: false }; //弹框默认不显示
 
-  showModal = () => {this.setState({visible: true,});};
+  // 弹窗要复用,(添加分类,修改分类) 添加=>形参是event 修改=>形参是categoryObj
+  showModal = (categoryObj) => {
+    // showModal一上来就重置isUpdate
+    this._id=''; //留着真正发送更改分类的请求时用
+    this.name=''; //做数据回显时用
+    this.isUpdate=false;//判断是否为修改的标识
+    const {_id,name}=categoryObj;
+    if(_id && name){
+      // 说明是修改
+        this._id=_id; //留着真正发送更改分类的请求时用
+        this.name=name; //做数据回显时用
+        this.isUpdate=true;//判断是否为修改的标识
+      }
+    if(this.refs.categoryForm){
+      this.refs.categoryForm.setFieldsValue({categoryName:this.name})
+    }
+    // 显示弹窗
+    this.setState({visible: true});
+  };
 
-  handleOk = e => {
-    this.setState({visible: false,});
+  handleOk = async () => { //确认的回调
+    // 拿到用户输入的值
+    const {categoryName}=this.refs.categoryForm.getFieldsValue();
+    // console.log(category);
+    // 做校验(坑: 如果不碰输入框,拿到的值是undefined)
+    if(!categoryName || !categoryName.trim()){
+      // 用户输入的值不合法 弹框提醒
+      message.error('输入不能为空');
+    }else{ 
+      // 输入的值有效,发送添加/修改一个分类的请求,
+      let result;
+      if(this.isUpdate){
+        result=await reqUpdateCategory(this._id,categoryName)
+      }else{
+        result=await reqAddCategory(categoryName);
+      }
+      const {status,msg}=result;
+      if(status===0){
+        message.success(this.isUpdate ? '修改分类成功':'新增分类成功',1)
+        // 服务器已经成功添加/修改了一个分类了,但redux中还没变化,要重新请求分类列表
+        this.props.saveCategoryAsync();
+        // 关闭弹窗
+        this.setState({visible: false,});
+        // 重置表单
+        this.refs.categoryForm.resetFields();
+      }else{
+        message.error(msg);
+      }
+    }
   };
 
   handleCancel = e => {
+    const {categoryForm} = this.refs
     this.setState({visible: false,});
+    // 重置表单
+    categoryForm.resetFields();
   };
 
-
-  // state={
-  //   categoryList:[],
-  // }
-
-  // 同步action版
-  /* getCategoryList=async ()=>{
-    const result=await reqCategoryList();
-    console.log(result);
-    const {status,data}=result;
-    if(status===0){
-      //this.setState({categoryList:data});
-      this.props.saveCategory(data);
-    }
-  } */
-
-
-
   componentDidMount(){
-    // this.getCategoryList();
     this.props.saveCategoryAsync();
   }
 
@@ -60,7 +90,7 @@ class Category extends Component {
       },
       { //高级列
         title: '操作',
-        render:()=>{return <Button type="link">修改分类</Button> }, //渲染函数
+        render:(categoryObj)=>{return <Button type="link" onClick={()=>{this.showModal(categoryObj)}}>修改分类</Button> }, //渲染函数
         key: 'handle',
         width:'20%',
         align:'center',
@@ -80,21 +110,22 @@ class Category extends Component {
             columns={columns}
             bordered
             rowKey='_id'
-            pagination={{pageSize:3}}
+            pagination={{pageSize:PAGE_SIZE}}
           />
         </Card>
         {/* 弹框的结构 */}
         <Modal
-          title="新增分类"
+          title={this.isUpdate ===true ? '修改分类':'新增分类'}
           visible={this.state.visible}
           onOk={this.handleOk} //点击确认的回调
           onCancel={this.handleCancel} //点击取消的回调
           okText="确定"
           cancelText="取消"
         >
-          <Form>
+          {/*initialValues表单默认值，只有初始化以及重置时生效 */}
+          <Form ref="categoryForm" initialValues={{categoryName:this.name}}>
             <Item
-              name="category"
+              name="categoryName"
               rules={[
                 {required:true,message:'分类名必须填写'}
               ]}
