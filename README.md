@@ -122,3 +122,6 @@
     token可以加前缀,更安全 atguigu_token
 ### 如果服务器返回401的状态码,说你身份过期时,要给用户强制退出,页面强制到login页面
     然后清除redux和local中的用户和其他数据
+### 关于ref的使用
+    1.如果给普通的html标签打ref='name',通过this.refs.name 能拿到当前标签
+    2.如果给

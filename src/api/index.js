@@ -30,3 +30,16 @@ export const reqWeatherData=()=>{
 
 // 获取商品分类数据
 export const reqCategoryList =()=> ajax.get('/manage/category/list');
+// 获取商品列表(分页)
+export const reqProductList=(pageNum,pageSize)=> ajax.get('/manage/product/list',{params:{
+  pageNum,
+  pageSize
+}})
+// 搜索商品列表
+export const reqSearch=(searchType,keyword,pageNum,pageSize)=> ajax.get('/manage/product/search',{params:{
+  [searchType]:keyword,
+  pageNum,
+  pageSize
+}})
+
+
